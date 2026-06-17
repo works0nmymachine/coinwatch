@@ -1,0 +1,31 @@
+name: tests
+
+on: push
+
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: coinwatch
+          POSTGRES_PASSWORD: coinwatch
+          POSTGRES_DB: coinwatch
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U coinwatch"
+          --health-interval 5s
+          --health-retries 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt -r requirements-dev.txt
+      - run: docker run --rm --network host -v $PWD/sql:/sql postgres:16 \
+          psql -h localhost -U coinwatch -d coinwatch -f /sql/schema.sql
+        env:
+          PGPASSWORD: coinwatch
+      - run: pytest -v
