@@ -17,3 +17,12 @@ CREATE TABLE IF NOT EXISTS raw_candles (
 
 CREATE INDEX IF NOT EXISTS idx_raw_candles_symbol_time
     ON raw_candles (symbol, open_time);
+
+CREATE TABLE IF NOT EXISTS raw_assets(
+    id               BIGSERIAL PRIMARY KEY,
+    asset_id         TEXT NOT NULL,
+    symbol           TEXT NOT NULL,
+    name             TEXT NOT NULL,
+    market_cap_rank  INTEGER,
+    fetched_at       TIMESTAMPTZ NOT NULL DEFAULT now()
+)
