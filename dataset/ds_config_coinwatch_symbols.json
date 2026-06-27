@@ -1,0 +1,37 @@
+{
+	"name": "ds_config_coinwatch_symbols",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_adls_coinwatch",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "coinwatch_symbols_config.csv",
+				"folderPath": "config",
+				"fileSystem": "bronze"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "symbol",
+				"type": "String"
+			},
+			{
+				"name": "interval",
+				"type": "String"
+			},
+			{
+				"name": "date",
+				"type": "String"
+			}
+		]
+	}
+}
