@@ -29,7 +29,7 @@
 				"type": "String"
 			},
 			{
-				"name": "date",
+				"name": "watermark",
 				"type": "String"
 			}
 		]
