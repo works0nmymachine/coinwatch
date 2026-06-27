@@ -1,0 +1,15 @@
+{
+	"name": "df-coinwatch",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Disabled",
+			"editable": true
+		}
+	},
+	"location": "northeurope",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "e66c60bc-0ee8-4999-b6e6-5d8956c7b2ea",
+		"tenantId": "dbd10b5c-99c6-4ae9-b356-482b9f69624f"
+	}
+}
