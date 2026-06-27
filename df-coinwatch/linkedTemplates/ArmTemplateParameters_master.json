@@ -11,6 +11,9 @@
 		"ls_adls_coinwatch_properties_typeProperties_url": {
 			"value": "https://coinwatchsa.dfs.core.windows.net/"
 		},
+		"ls_http_binance_properties_typeProperties_url": {
+			"value": "https://data.binance.vision"
+		},
 		"containerUri": {
 			"value": ""
 		},

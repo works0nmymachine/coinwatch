@@ -14,6 +14,10 @@
 		"ls_adls_coinwatch_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://coinwatchsa.dfs.core.windows.net/"
+		},
+		"ls_http_binance_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://data.binance.vision"
 		}
 	},
 	"variables": {
@@ -33,6 +37,21 @@
 						"type": "SecureString",
 						"value": "[parameters('ls_adls_coinwatch_accountKey')]"
 					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ls_http_binance')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "HttpServer",
+				"typeProperties": {
+					"url": "[parameters('ls_http_binance_properties_typeProperties_url')]",
+					"enableServerCertificateValidation": true,
+					"authenticationType": "Anonymous"
 				}
 			},
 			"dependsOn": []
