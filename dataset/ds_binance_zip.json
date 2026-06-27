@@ -5,11 +5,27 @@
 			"referenceName": "ls_http_binance",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"symbol": {
+				"type": "string"
+			},
+			"interval": {
+				"type": "string"
+			},
+			"date": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "Binary",
 		"typeProperties": {
 			"location": {
-				"type": "HttpServerLocation"
+				"type": "HttpServerLocation",
+				"relativeUrl": "@concat('data/spot/daily/klines/', dataset().symbol, '/', dataset().interval, '/', dataset().symbol, '-', dataset().interval, '-', dataset().date, '.zip')"
+			},
+			"compression": {
+				"type": "ZipDeflate",
+				"level": "Optimal"
 			}
 		}
 	}
