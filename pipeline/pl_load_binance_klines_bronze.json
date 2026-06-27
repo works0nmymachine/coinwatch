@@ -59,7 +59,7 @@
 							"typeProperties": {
 								"ifTrueActivities": [
 									{
-										"name": "Copy data1",
+										"name": "CopyBinanceToBronze",
 										"type": "Copy",
 										"dependsOn": [],
 										"policy": {
@@ -73,11 +73,14 @@
 											"source": {
 												"type": "BinarySource",
 												"storeSettings": {
-													"type": "AzureBlobFSReadSettings",
-													"recursive": true
+													"type": "HttpReadSettings",
+													"requestMethod": "GET"
 												},
 												"formatSettings": {
-													"type": "BinaryReadSettings"
+													"type": "BinaryReadSettings",
+													"compressionProperties": {
+														"type": "ZipDeflateReadSettings"
+													}
 												}
 											},
 											"sink": {
@@ -90,14 +93,24 @@
 										},
 										"inputs": [
 											{
-												"referenceName": "ds_adls_bronze_binary",
-												"type": "DatasetReference"
+												"referenceName": "ds_binance_zip",
+												"type": "DatasetReference",
+												"parameters": {
+													"symbol": "@item().symbol",
+													"interval": "@item().interval",
+													"date": "@formatDateTime(addDays(item().watermark, 1), 'yyyy-MM-dd')"
+												}
 											}
 										],
 										"outputs": [
 											{
 												"referenceName": "ds_adls_bronze_binance_binary",
-												"type": "DatasetReference"
+												"type": "DatasetReference",
+												"parameters": {
+													"symbol": "@item().symbol",
+													"interval": "@item().interval",
+													"date": "@formatDateTime(addDays(item().watermark, 1), 'yyyy-MM-dd')"
+												}
 											}
 										]
 									}
