@@ -55,6 +55,43 @@
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_binance_zip')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_http_binance",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"symbol": {
+						"type": "string"
+					},
+					"interval": {
+						"type": "string"
+					},
+					"date": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "Binary",
+				"typeProperties": {
+					"location": {
+						"type": "HttpServerLocation",
+						"relativeUrl": "@concat('data/spot/daily/klines/', dataset().symbol, '/', dataset().interval, '/', dataset().symbol, '-', dataset().interval, '-', dataset().date, '.zip')"
+					},
+					"compression": {
+						"type": "ZipDeflate",
+						"level": "Optimal"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_http_binance')]"
+			]
 		}
 	]
 }
