@@ -57,6 +57,10 @@
 							"dependsOn": [],
 							"userProperties": [],
 							"typeProperties": {
+								"expression": {
+									"value": "@lessOrEquals(ticks(addDays(item().watermark, 1)), ticks(addDays(utcNow(), -1)))",
+									"type": "Expression"
+								},
 								"ifTrueActivities": [
 									{
 										"name": "CopyBinanceToBronze",
@@ -69,6 +73,7 @@
 											"secureOutput": false,
 											"secureInput": false
 										},
+										"userProperties": [],
 										"typeProperties": {
 											"source": {
 												"type": "BinarySource",
