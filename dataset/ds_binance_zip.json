@@ -1,0 +1,16 @@
+{
+	"name": "ds_binance_zip",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_http_binance",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "HttpServerLocation"
+			}
+		}
+	}
+}
