@@ -145,7 +145,10 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"jobId": "990663311610520"
+					"jobId": "990663311610520",
+					"jobParameters": {
+						"run_date": "@pipeline().parameters.run_date"
+					}
 				},
 				"linkedServiceName": {
 					"referenceName": "ls_databricks_coinwatch",
@@ -153,6 +156,12 @@
 				}
 			}
 		],
+		"parameters": {
+			"run_date": {
+				"type": "string",
+				"defaultValue": "2026-06-10"
+			}
+		},
 		"annotations": []
 	}
 }
