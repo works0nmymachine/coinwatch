@@ -1,0 +1,12 @@
+{
+	"name": "ls_databricks_coinwatch",
+	"properties": {
+		"annotations": [],
+		"type": "AzureDatabricks",
+		"typeProperties": {
+			"domain": "https://adb-7405607160896811.11.azuredatabricks.net",
+			"authentication": "MSI",
+			"workspaceResourceId": "/subscriptions/58ad3f9e-34eb-4d54-8bf2-6d309e1c52e1/resourceGroups/rg-coinwatch/providers/Microsoft.Databricks/workspaces/wscoinwatch"
+		}
+	}
+}
