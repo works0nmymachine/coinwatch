@@ -1,0 +1,20 @@
+{
+	"name": "pl_backfill_coinwatch_days",
+	"properties": {
+		"activities": [
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": []
+			}
+		],
+		"parameters": {
+			"days_back": {
+				"type": "int",
+				"defaultValue": 60
+			}
+		},
+		"annotations": []
+	}
+}
