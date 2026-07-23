@@ -147,7 +147,10 @@
 				"typeProperties": {
 					"jobId": "990663311610520",
 					"jobParameters": {
-						"run_date": "@pipeline().parameters.run_date"
+						"run_date": {
+							"value": "@pipeline().parameters.run_date",
+							"type": "Expression"
+						}
 					}
 				},
 				"linkedServiceName": {
