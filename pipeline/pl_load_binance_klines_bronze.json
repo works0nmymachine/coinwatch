@@ -162,7 +162,7 @@
 		"parameters": {
 			"run_date": {
 				"type": "string",
-				"defaultValue": "2026-06-10"
+				"defaultValue": "@pipeline().parameters.run_date"
 			}
 		},
 		"annotations": []
