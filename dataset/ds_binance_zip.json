@@ -7,16 +7,13 @@
 		},
 		"parameters": {
 			"symbol": {
-				"type": "string",
-				"defaultValue": "@item().symbol"
+				"type": "string"
 			},
 			"interval": {
-				"type": "string",
-				"defaultValue": "@item().interval"
+				"type": "string"
 			},
 			"date": {
-				"type": "string",
-				"defaultValue": "@pipeline().parameters.run_date"
+				"type": "string"
 			}
 		},
 		"annotations": [],
@@ -28,10 +25,6 @@
 					"value": "@concat('data/spot/daily/klines/', dataset().symbol, '/', dataset().interval, '/', dataset().symbol, '-', dataset().interval, '-', dataset().date, '.zip')",
 					"type": "Expression"
 				}
-			},
-			"compression": {
-				"type": "bzip2",
-				"level": "Optimal"
 			}
 		}
 	}

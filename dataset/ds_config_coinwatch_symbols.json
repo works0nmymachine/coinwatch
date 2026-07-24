@@ -27,10 +27,6 @@
 			{
 				"name": "interval",
 				"type": "String"
-			},
-			{
-				"name": "watermark",
-				"type": "String"
 			}
 		]
 	}
