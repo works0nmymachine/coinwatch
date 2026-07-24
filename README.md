@@ -13,34 +13,85 @@ The complete chain runs from a single ADF pipeline without manual processing.
 ## Architecture
 
 ```mermaid
-graph LR
-    subgraph Sources
-        BINANCE[data.binance.vision<br/>daily Binance kline files]
+%%{init: {
+  "themeVariables": {
+    "fontSize": "20px"
+  },
+  "flowchart": {
+    "htmlLabels": true,
+    "nodeSpacing": 45,
+    "rankSpacing": 65
+  }
+}}%%
+
+flowchart TD
+
+    subgraph SOURCE["Source"]
+        direction TB
+        BINANCE["data.binance.vision<br/><b>Daily Binance kline files</b>"]
     end
 
-    subgraph Azure
-        ADF[Azure Data Factory<br/>metadata-driven ingestion]
-        BRONZE[(ADLS Gen2<br/>bronze)]
-        DB[Azure Databricks<br/>PySpark]
-        SILVER[(silver.candles<br/>Delta)]
-        GOLD[(gold analytics marts<br/>Delta)]
-        SQLWH[Databricks SQL warehouse]
+    subgraph INGESTION["Ingestion"]
+        direction TB
+        ADF["Azure Data Factory<br/><b>Metadata-driven pipeline</b>"]
     end
 
-    MODEL[Power BI<br/>semantic model]
-    REPORT[Power BI<br/>report]
+    subgraph STORAGE["Data lake"]
+        direction TB
+        BRONZE[("ADLS Gen2 — Bronze<br/><b>Raw source data</b>")]
+    end
 
-    BINANCE -->|download daily files| ADF
-    ADF -->|copy without transformation| BRONZE
-    BRONZE -->|type, validate and deduplicate| DB
-    DB -->|MERGE by symbol and open time| SILVER
-    SILVER -->|calculate analytics| GOLD
-    GOLD -->|serve through SQL| SQLWH
-    SQLWH -->|refresh semantic model| MODEL
-    MODEL --> REPORT
+    subgraph PROCESSING["Processing"]
+        direction TB
+        DB["Azure Databricks<br/><b>PySpark transformations</b>"]
+        SILVER[("Silver — candles<br/><b>Cleaned Delta data</b>")]
+        GOLD[("Gold — analytics marts<br/><b>Prepared metrics</b>")]
+    end
+
+    subgraph SERVING["Serving and reporting"]
+        direction TB
+        SQLWH["Databricks SQL Warehouse<br/><b>BI endpoint</b>"]
+        MODEL["Power BI<br/><b>Semantic model</b>"]
+        REPORT["Power BI<br/><b>Dashboard</b>"]
+    end
+
+    BINANCE -->|"Download daily files"| ADF
+    ADF -->|"Copy without transformation"| BRONZE
+    BRONZE -->|"Read, type and validate"| DB
+    DB -->|"MERGE by symbol and open time"| SILVER
+    SILVER -->|"Calculate analytical metrics"| GOLD
+    GOLD -->|"Expose through SQL"| SQLWH
+    SQLWH -->|"Refresh data"| MODEL
+    MODEL -->|"Display insights"| REPORT
+
+    classDef default font-size:20px;
 ```
 
 One ADF pipeline runs the complete daily chain. Adding another trading symbol is a configuration change rather than a pipeline-code change.
+
+## Why there is local code in this repo
+
+The project was built in two phases.
+
+**Week 1 was the local learning and validation phase.** The Python downloader, Docker Postgres database and SQL files were used to understand the Binance data shape, test idempotent loading, and write the SQL logic against real data before moving the pipeline to Azure.
+
+**The final platform path is the Azure path.** In the delivered version, ADF downloads the Binance files into ADLS bronze, Databricks transforms them into Delta silver and gold tables, and Power BI reads the gold layer.
+
+The local pieces are still useful and should remain in the repo because they show engineering practice:
+
+- `ingestion/` and `scripts/` show how the first extractor and testable Python modules were built.
+- `docker-compose.yml` shows the local Postgres sandbox used during development.
+- `sql/` contains the deduplication, gap-detection and sessionization SQL that later informed the Databricks silver and gold logic.
+- `tests/` proves the ingestion code and parsing logic.
+
+What should not be committed:
+
+- downloaded Binance or CoinGecko data;
+- local Postgres database files or volumes;
+- `.env` files, passwords, tokens or Azure secrets;
+- Power BI service credentials or personal workspace exports.
+
+So the repo shows the build journey and the final cloud architecture, but it does not store raw downloaded data or local database state.
 
 ## Data flow
 
