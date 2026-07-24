@@ -22,10 +22,7 @@
 							"requestMethod": "GET"
 						},
 						"formatSettings": {
-							"type": "BinaryReadSettings",
-							"compressionProperties": {
-								"type": "ZipDeflateReadSettings"
-							}
+							"type": "BinaryReadSettings"
 						}
 					},
 					"sink": {
@@ -50,6 +47,45 @@
 				"outputs": [
 					{
 						"referenceName": "ds_adls_bronze_binary",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "ExtractZipToBronze",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "copy_binance_zip_to_bronze",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "BinarySource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true
+						},
+						"formatSettings": {
+							"type": "BinaryReadSettings"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_adls_binance_zip_extract_source",
 						"type": "DatasetReference"
 					}
 				]

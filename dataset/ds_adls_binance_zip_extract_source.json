@@ -1,0 +1,17 @@
+{
+	"name": "ds_adls_binance_zip_extract_source",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_adls_coinwatch",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileSystem": "bronze"
+			}
+		}
+	}
+}
