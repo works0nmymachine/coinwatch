@@ -1,0 +1,15 @@
+{
+	"name": "adf-coinwatch",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Disabled",
+			"editable": true
+		}
+	},
+	"location": "northeurope",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "ea42ba28-9fe2-45f5-b7b0-79505d7b39ba",
+		"tenantId": "86acaba1-490c-4652-9004-61489c2ef236"
+	}
+}
