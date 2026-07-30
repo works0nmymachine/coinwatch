@@ -5,8 +5,7 @@
 		"annotations": [],
 		"type": "AzureBlobFS",
 		"typeProperties": {
-			"url": "https://coinwatchsa.dfs.core.windows.net/",
-			"authenticate as": "System Assigned Managed Identity (no encryptedCredential)"
+			"url": "https://coinwatchsae6aqt0.dfs.core.windows.net/"
 		}
 	}
 }
